@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sunflower Web | Modern Links</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #ffcc00;
+            --bg-dark: #0f172a;
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        /* --- Custom Cursor CSS --- */
+        .cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--primary-color);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease, background 0.3s ease;
+            transform: translate(-50%, -50%);
+        }
+
+        .cursor-follower {
+            width: 8px;
+            height: 8px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: transform 0.15s ease;
+        }
+
+        /* کاتێک ماوسەکە دەچێتە سەر لینکەکان */
+        .cursor.active {
+            transform: translate(-50%, -50%) scale(3);
+            background: rgba(255, 204, 0, 0.2);
+            border: none;
+        }
+
+        body {
+            margin: 0;
+            background-color: var(--bg-dark);
+            font-family: 'Segoe UI', sans-serif;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            cursor: none; /* شاردنەوەی ماوسی ڕاستەقینە */
+        }
+
+        .background-animate {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 400px;
+            padding: 40px 20px;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 35px;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+        }
+
+        .profile-img {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            border: 3px solid var(--primary-color);
+            margin-bottom: 20px;
+            transition: 0.5s;
+        }
+
+        .links-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .link-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 25px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            border-radius: 18px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .link-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--primary-color);
+            transform: scale(1.02);
+        }
+
+        .link-card i { font-size: 20px; }
+        .fa-instagram { color: #E1306C; }
+        .fa-tiktok { color: #00f2ea; }
+        .fa-telegram { color: #0088cc; }
+
+        @media (max-width: 768px) {
+            body { cursor: auto; } /* لە مۆبایل ماوسەکە لا ببە */
+            .cursor, .cursor-follower { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <div class="background-animate"></div>
+
+    <div class="container">
+        <img src="logo.png" alt="Logo" class="profile-img">
+        <h1>Sunflower Web 🌻</h1>
+        <p style="color: #94a3b8; margin-bottom: 30px;">گەشە بکە، فێر ببە، دروست بکە</p>
+
+        <div class="links-container">
+            <a href="https://instagram.com/sunflowerweb.iq" class="link-card hover-target">
+                <span>Instagram | ئینستاگرام</span>
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://tiktok.com/@sunflowerweb.iq" class="link-card hover-target">
+                <span>TikTok | تیکتۆک</span>
+                <i class="fab fa-tiktok"></i>
+            </a>
+            <a href="https://t.me/sunflowerwebiq" class="link-card hover-target">
+                <span>Telegram | تلگرام</span>
+                <i class="fab fa-telegram"></i>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        const cursor = document.querySelector('.cursor');
+        const follower = document.querySelector('.cursor-follower');
+        const links = document.querySelectorAll('.hover-target');
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            
+            setTimeout(() => {
+                follower.style.left = e.clientX + 'px';
+                follower.style.top = e.clientY + 'px';
+            }, 50);
+        });
+
+        links.forEach(link => {
+            link.addEventListener('mouseenter', () => {
+                cursor.classList.add('active');
+            });
+            link.addEventListener('mouseleave', () => {
+                cursor.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
