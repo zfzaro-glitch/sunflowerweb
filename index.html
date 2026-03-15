@@ -6,12 +6,171 @@
     <title>Sunflower Web | Modern Links</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* گۆڕاوەکان بۆ لایت مۆد (باری سەرەکی) */
         :root {
+            --primary-color: #ffb703; /* ڕەنگی زەردێکی جوانتر بۆ لایت مۆد */
+            --bg-gradient-1: #f8fafc;
+            --bg-gradient-2: #e2e8f0;
+            --text-color: #1e293b;
+            --text-muted: #475569;
+            --glass: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --card-bg: rgba(255, 255, 255, 0.8);
+            --card-hover: rgba(255, 255, 255, 1);
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        /* گۆڕاوەکان بۆ دارک مۆد */
+        body.dark-mode {
             --primary-color: #ffcc00;
-            --bg-dark: #0f172a;
+            --bg-gradient-1: #1e293b;
+            --bg-gradient-2: #0f172a;
+            --text-color: #ffffff;
+            --text-muted: #94a3b8;
             --glass: rgba(255, 255, 255, 0.05);
             --glass-border: rgba(255, 255, 255, 0.1);
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-hover: rgba(255, 255, 255, 0.08);
+            --shadow: rgba(0, 0, 0, 0.3);
         }
+
+        body {
+            margin: 0;
+            background-color: var(--bg-gradient-1);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            cursor: none; 
+            transition: background 0.5s ease, color 0.5s ease;
+        }
+
+        .background-animate {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at center, var(--bg-gradient-1) 0%, var(--bg-gradient-2) 100%);
+            transition: background 0.5s ease;
+        }
+
+        /* دوگمەی دارک/لایت مۆد */
+        .theme-toggle-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-color);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 100;
+            box-shadow: 0 4px 10px var(--shadow);
+            transition: 0.3s ease;
+        }
+
+        .theme-toggle-btn:hover {
+            transform: scale(1.1);
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        /* کۆنتەینەری سەرەکی */
+        .container {
+            width: 90%;
+            max-width: 420px;
+            padding: 40px 25px;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 35px;
+            text-align: center;
+            box-shadow: 0 25px 50px var(--shadow);
+            transition: 0.5s ease;
+            margin: 40px 0;
+        }
+
+        .profile-img {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            border: 3px solid var(--primary-color);
+            margin-bottom: 15px;
+            box-shadow: 0 10px 20px var(--shadow);
+            transition: 0.5s;
+        }
+
+        h1 {
+            margin: 10px 0 5px 0;
+            font-size: 24px;
+        }
+
+        /* ستايلی بایۆ */
+        .bio-section {
+            margin-bottom: 25px;
+        }
+        
+        .bio-ku {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-color);
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+
+        .bio-ar {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.5;
+            direction: rtl;
+        }
+
+        /* لینکەکان */
+        .links-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .link-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 25px;
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 18px;
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+        }
+
+        .link-card:hover {
+            background: var(--card-hover);
+            border-color: var(--primary-color);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 10px 20px var(--shadow);
+        }
+
+        .link-card i { font-size: 22px; transition: 0.3s;}
+        
+        /* ڕەنگی ئایکۆنەکان */
+        .fa-instagram { color: #E1306C; }
+        .fa-tiktok { color: #000000; } /* ڕەش بۆ لایت مۆد */
+        body.dark-mode .fa-tiktok { color: #ffffff; } /* سپی بۆ دارک مۆد */
+        .fa-facebook { color: #1877F2; }
+        .fa-telegram { color: #0088cc; }
 
         /* --- Custom Cursor CSS --- */
         .cursor {
@@ -38,91 +197,25 @@
             transition: transform 0.15s ease;
         }
 
-        /* کاتێک ماوسەکە دەچێتە سەر لینکەکان */
         .cursor.active {
-            transform: translate(-50%, -50%) scale(3);
+            transform: translate(-50%, -50%) scale(2.5);
             background: rgba(255, 204, 0, 0.2);
-            border: none;
+            border-color: transparent;
         }
-
-        body {
-            margin: 0;
-            background-color: var(--bg-dark);
-            font-family: 'Segoe UI', sans-serif;
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            cursor: none; /* شاردنەوەی ماوسی ڕاستەقینە */
-        }
-
-        .background-animate {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1;
-            background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
-        }
-
-        .container {
-            width: 90%;
-            max-width: 400px;
-            padding: 40px 20px;
-            background: var(--glass);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 35px;
-            text-align: center;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
-        }
-
-        .profile-img {
-            width: 110px;
-            height: 110px;
-            border-radius: 50%;
-            border: 3px solid var(--primary-color);
-            margin-bottom: 20px;
-            transition: 0.5s;
-        }
-
-        .links-container {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .link-card {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 18px 25px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--glass-border);
-            border-radius: 18px;
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            transition: 0.3s;
-        }
-
-        .link-card:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: var(--primary-color);
-            transform: scale(1.02);
-        }
-
-        .link-card i { font-size: 20px; }
-        .fa-instagram { color: #E1306C; }
-        .fa-tiktok { color: #00f2ea; }
-        .fa-telegram { color: #0088cc; }
 
         @media (max-width: 768px) {
-            body { cursor: auto; } /* لە مۆبایل ماوسەکە لا ببە */
+            body { cursor: auto; }
             .cursor, .cursor-follower { display: none; }
+            .container { padding: 30px 20px; margin: 80px 0 30px 0; }
+            .theme-toggle-btn { top: 15px; left: 15px; }
         }
     </style>
 </head>
 <body>
+
+    <button class="theme-toggle-btn hover-target" id="theme-toggle" aria-label="Toggle Theme">
+        <i class="fas fa-moon"></i>
+    </button>
 
     <div class="cursor"></div>
     <div class="cursor-follower"></div>
@@ -132,46 +225,76 @@
     <div class="container">
         <img src="logo.png" alt="Logo" class="profile-img">
         <h1>Sunflower Web 🌻</h1>
-        <p style="color: #94a3b8; margin-bottom: 30px;">گەشە بکە، فێر ببە، دروست بکە</p>
+        
+        <div class="bio-section">
+            <p class="bio-ku">پەرەپێدەری وێب | دروستکردنی بایۆلینک، QR Code و وێبسایتی پێشکەوتوو بۆ بەدیجیتاڵکردنی کارەکانت.</p>
+            <p class="bio-ar">مطور واجهات ويب | تصميم روابط البايو، رموز QR، ومواقع احترافية لرقمنة أعمالك.</p>
+        </div>
 
         <div class="links-container">
-            <a href="https://instagram.com/sunflowerweb.iq" class="link-card hover-target">
+            <a href="https://instagram.com/sunflowerweb.iq" target="_blank" class="link-card hover-target">
                 <span>Instagram | ئینستاگرام</span>
                 <i class="fab fa-instagram"></i>
             </a>
-            <a href="https://tiktok.com/@sunflowerweb.iq" class="link-card hover-target">
+            <a href="https://tiktok.com/@sunflowerwebiq" target="_blank" class="link-card hover-target">
                 <span>TikTok | تیکتۆک</span>
                 <i class="fab fa-tiktok"></i>
             </a>
-            <a href="https://t.me/sunflowerwebiq" class="link-card hover-target">
-                <span>Telegram | تلگرام</span>
+            <a href="https://www.facebook.com/share/1J5JFX145s/" target="_blank" class="link-card hover-target">
+                <span>Facebook | فەیسبووک</span>
+                <i class="fab fa-facebook"></i>
+            </a>
+            <a href="https://t.me/sunflowerwebiq" target="_blank" class="link-card hover-target">
+                <span>Telegram | تێلیگرام</span>
                 <i class="fab fa-telegram"></i>
             </a>
         </div>
     </div>
 
     <script>
+        // بەشی تایبەت بە ماوس (Custom Cursor)
         const cursor = document.querySelector('.cursor');
         const follower = document.querySelector('.cursor-follower');
         const links = document.querySelectorAll('.hover-target');
 
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-            
-            setTimeout(() => {
-                follower.style.left = e.clientX + 'px';
-                follower.style.top = e.clientY + 'px';
-            }, 50);
-        });
+        // دڵنیابوون لەوەی لەسەر مۆبایل ئیش ناکات بۆ ئەوەی کێشە دروست نەکات
+        if (window.innerWidth > 768) {
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+                
+                setTimeout(() => {
+                    follower.style.left = e.clientX + 'px';
+                    follower.style.top = e.clientY + 'px';
+                }, 50);
+            });
 
-        links.forEach(link => {
-            link.addEventListener('mouseenter', () => {
-                cursor.classList.add('active');
+            links.forEach(link => {
+                link.addEventListener('mouseenter', () => {
+                    cursor.classList.add('active');
+                });
+                link.addEventListener('mouseleave', () => {
+                    cursor.classList.remove('active');
+                });
             });
-            link.addEventListener('mouseleave', () => {
-                cursor.classList.remove('active');
-            });
+        }
+
+        // بەشی تایبەت بە دارک مۆد و لایت مۆد
+        const themeBtn = document.getElementById('theme-toggle');
+        const themeIcon = themeBtn.querySelector('i');
+        const body = document.body;
+
+        themeBtn.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            
+            // گۆڕینی ئایکۆنەکە (مانگ و خۆر)
+            if (body.classList.contains('dark-mode')) {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
         });
     </script>
 </body>
